@@ -1,0 +1,7 @@
+name: GadgetsMenu
+version: '${project.version}'
+main: me.hugo.gadgetsmenu.GadgetsMenu
+api-version: 1.19
+authors: [ Hugo ]
+description: Gadgets Menu, proof of concept
+website: https://hugo-portfolio.vercel.app/
