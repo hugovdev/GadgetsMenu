@@ -24,8 +24,16 @@ public class PlayerData {
     private Player player;
     private HashMap<Integer, ItemStack> lastInventory = new HashMap<>();
 
+    private Long lastGadgetUseTime;
+
     public PlayerData(UUID uuid) {
         this.playerUuid = uuid;
+    }
+
+    public void playSound(Sound sound) {
+        if (player == null) return;
+
+        player.playSound(player.getLocation(), sound, 1.0f, 1.0f);
     }
 
     public void openGadgetsInventory() {
@@ -77,7 +85,22 @@ public class PlayerData {
             inventory.setArmorContents(null);
         }
 
-        for (HotBarJoinItem hotBarJoinItem : HotBarJoinItem.values()) inventory.setItem(hotBarJoinItem.getSlot(), hotBarJoinItem.getItem());
+        for (HotBarJoinItem hotBarJoinItem : HotBarJoinItem.values())
+            inventory.setItem(hotBarJoinItem.getSlot(), hotBarJoinItem.getItem());
+    }
+
+    public boolean isOnGadgetCooldown() {
+        return this.lastGadgetUseTime != null && System.currentTimeMillis() < this.lastGadgetUseTime;
+    }
+
+    public Long getLastGadgetUseTime() {
+        return lastGadgetUseTime;
+    }
+
+    public PlayerData setGadgetCooldown(double seconds) {
+        this.lastGadgetUseTime = System.currentTimeMillis() + (long) (seconds * 1000L);
+
+        return this;
     }
 
     public Player getPlayer() {
@@ -87,11 +110,5 @@ public class PlayerData {
     public PlayerData setPlayer(Player player) {
         this.player = player;
         return this;
-    }
-
-    public void playSound(Sound sound) {
-        if (player == null) return;
-
-        player.playSound(player.getLocation(), sound, 1.0f, 1.0f);
     }
 }

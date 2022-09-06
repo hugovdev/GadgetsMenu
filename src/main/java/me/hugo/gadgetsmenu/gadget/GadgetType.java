@@ -1,7 +1,8 @@
 package me.hugo.gadgetsmenu.gadget;
 
 import me.hugo.gadgetsmenu.GadgetsMenu;
-import me.hugo.gadgetsmenu.gadget.list.ChickenShooterAction;
+import me.hugo.gadgetsmenu.gadget.action.GadgetAction;
+import me.hugo.gadgetsmenu.gadget.action.list.ChickenShooterAction;
 import me.hugo.gadgetsmenu.player.PlayerData;
 import me.hugo.gadgetsmenu.util.ClickAction;
 import me.hugo.gadgetsmenu.util.ItemBuilder;
@@ -23,24 +24,28 @@ public enum GadgetType {
 
     CHICKEN_SHOOTER("Chicken Shooter",
             Arrays.asList("Shoot explosive chickens or", "eggs throughout the lobby!"),
+            1.0,
             Material.GOLDEN_HORSE_ARMOR, new ChickenShooterAction(), "gadgets.chicken-shooter"),
 
     // Add any new gadgets here for example:
     TRAIN("Train",
             Arrays.asList("Create a train everyone", "can join and ride!"),
+            10.0,
             Material.RAIL, null, "gadgets.train");
 
     private final String name;
     private final List<String> description;
+    private final double cooldown;
     private final Material icon;
-    private final ClickAction gadgetAction;
+    private final GadgetAction gadgetAction;
     private final String permission;
 
     private final ItemStack gadgetItem;
 
-    GadgetType(String name, List<String> description, Material icon, ClickAction gadgetAction, String permission) {
+    GadgetType(String name, List<String> description, double cooldown, Material icon, GadgetAction gadgetAction, String permission) {
         this.name = name;
         this.description = description;
+        this.cooldown = cooldown;
         this.icon = icon;
         this.gadgetAction = gadgetAction;
         this.permission = permission;
@@ -49,7 +54,6 @@ public enum GadgetType {
 
         itemDescription.add(Component.text(""));
         itemDescription.add(Component.text("Click to use!").color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false));
-
 
         this.gadgetItem = new ItemBuilder(this.icon).setName(Component.text(this.name).color(NamedTextColor.GREEN))
                 .setLore(itemDescription).hideAttributes().toItemStack();
@@ -97,11 +101,19 @@ public enum GadgetType {
         );
     }
 
-    public ClickAction getGadgetAction() {
+    public GadgetAction getGadgetAction() {
         return gadgetAction;
     }
 
     public ItemStack getGadgetItem() {
         return gadgetItem;
+    }
+
+    public double getCooldown() {
+        return cooldown;
+    }
+
+    public String getName() {
+        return name;
     }
 }
