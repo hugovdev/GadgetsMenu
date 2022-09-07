@@ -18,15 +18,15 @@ import org.bukkit.inventory.PlayerInventory;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class PlayerData {
+public class GadgetPlayer {
 
-    private UUID playerUuid;
+    private final UUID playerUuid;
     private Player player;
     private HashMap<Integer, ItemStack> lastInventory = new HashMap<>();
 
-    private Long lastGadgetUseTime;
+    private long lastGadgetUseTime = 0L;
 
-    public PlayerData(UUID uuid) {
+    public GadgetPlayer(UUID uuid) {
         this.playerUuid = uuid;
     }
 
@@ -90,14 +90,14 @@ public class PlayerData {
     }
 
     public boolean isOnGadgetCooldown() {
-        return this.lastGadgetUseTime != null && System.currentTimeMillis() < this.lastGadgetUseTime;
+        return System.currentTimeMillis() < this.lastGadgetUseTime;
     }
 
     public Long getLastGadgetUseTime() {
         return lastGadgetUseTime;
     }
 
-    public PlayerData setGadgetCooldown(double seconds) {
+    public GadgetPlayer setGadgetCooldown(double seconds) {
         this.lastGadgetUseTime = System.currentTimeMillis() + (long) (seconds * 1000L);
 
         return this;
@@ -107,7 +107,7 @@ public class PlayerData {
         return player;
     }
 
-    public PlayerData setPlayer(Player player) {
+    public GadgetPlayer setPlayer(Player player) {
         this.player = player;
         return this;
     }

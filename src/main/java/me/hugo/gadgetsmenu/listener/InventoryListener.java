@@ -1,6 +1,7 @@
 package me.hugo.gadgetsmenu.listener;
 
 import me.hugo.gadgetsmenu.GadgetsMenu;
+import me.hugo.gadgetsmenu.player.GadgetPlayerRegistry;
 import me.hugo.gadgetsmenu.util.ClickAction;
 import me.hugo.gadgetsmenu.util.gui.Icon;
 import me.hugo.gadgetsmenu.util.gui.IconMenu;
@@ -12,11 +13,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class InventoryManagement implements Listener {
+public class InventoryListener implements Listener {
 
     private final GadgetsMenu main;
 
-    public InventoryManagement(GadgetsMenu main) {
+    public InventoryListener(GadgetsMenu main) {
         this.main = main;
     }
 
@@ -24,19 +25,17 @@ public class InventoryManagement implements Listener {
     public void onClick(InventoryClickEvent event) {
         event.setCancelled(true);
 
-        if (!(event.getView().getTopInventory().getHolder() instanceof IconMenu customHolder) || !(event.getWhoClicked() instanceof Player))
+        if (!(event.getView().getTopInventory().getHolder() instanceof IconMenu customHolder) || !(event.getWhoClicked() instanceof Player player))
             return;
 
-        Player player = (Player) event.getWhoClicked();
         ItemStack itemStack = event.getCurrentItem();
-
         if (itemStack == null || itemStack.getType() == Material.AIR) return;
 
         Icon icon = customHolder.getIcon(event.getRawSlot());
         if (icon == null) return;
 
         for (ClickAction clickAction : icon.getClickActions()) {
-            clickAction.execute(main, main.getPlayerDataManager().getPlayerData(player), event.getClick());
+            clickAction.execute(main, GadgetPlayerRegistry.get(player), event.getClick());
         }
     }
 
@@ -45,7 +44,7 @@ public class InventoryManagement implements Listener {
         if (!(event.getView().getTopInventory().getHolder() instanceof IconMenu menu) || !(event.getPlayer() instanceof Player player))
             return;
 
-        if (menu.isRemoveInventory()) main.getPlayerDataManager().getPlayerData(player).restoreInventory();
+        if (menu.isRemoveInventory()) GadgetPlayerRegistry.get(player).restoreInventory();
     }
 
 }

@@ -3,8 +3,7 @@ package me.hugo.gadgetsmenu.gadget;
 import me.hugo.gadgetsmenu.GadgetsMenu;
 import me.hugo.gadgetsmenu.gadget.action.GadgetAction;
 import me.hugo.gadgetsmenu.gadget.action.list.ChickenShooterAction;
-import me.hugo.gadgetsmenu.player.PlayerData;
-import me.hugo.gadgetsmenu.util.ClickAction;
+import me.hugo.gadgetsmenu.player.GadgetPlayer;
 import me.hugo.gadgetsmenu.util.ItemBuilder;
 import me.hugo.gadgetsmenu.util.gui.Icon;
 import net.kyori.adventure.text.Component;
@@ -64,7 +63,7 @@ public enum GadgetType {
         if (gadgetAction instanceof Listener listener) Bukkit.getPluginManager().registerEvents(listener, main);
     }
 
-    public Icon getMenuIcon(PlayerData player) {
+    public Icon getMenuIcon(GadgetPlayer player) {
         boolean hasPermission = player.getPlayer().hasPermission(this.permission);
         List<Component> itemDescription = this.description.stream().map(line -> Component.text(line).color(NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false)).collect(Collectors.toList());
 

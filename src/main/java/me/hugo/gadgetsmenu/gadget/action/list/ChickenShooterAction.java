@@ -2,7 +2,7 @@ package me.hugo.gadgetsmenu.gadget.action.list;
 
 import me.hugo.gadgetsmenu.GadgetsMenu;
 import me.hugo.gadgetsmenu.gadget.action.GadgetAction;
-import me.hugo.gadgetsmenu.player.PlayerData;
+import me.hugo.gadgetsmenu.player.GadgetPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -18,7 +18,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 public class ChickenShooterAction implements GadgetAction, Listener {
 
     @Override
-    public boolean onLeftClick(GadgetsMenu main, PlayerData player) {
+    public boolean onLeftClick(GadgetsMenu main, GadgetPlayer player) {
         Egg egg = player.getPlayer().launchProjectile(Egg.class);
 
         egg.setMetadata("explosive", new FixedMetadataValue(main, "explosive"));
@@ -27,7 +27,7 @@ public class ChickenShooterAction implements GadgetAction, Listener {
     }
 
     @Override
-    public boolean onRightClick(GadgetsMenu main, PlayerData player) {
+    public boolean onRightClick(GadgetsMenu main, GadgetPlayer player) {
         Chicken chicken = (Chicken) player.getPlayer().getWorld().spawnEntity(player.getPlayer().getEyeLocation(), EntityType.CHICKEN);
         chicken.setInvulnerable(true);
         chicken.setVelocity(player.getPlayer().getLocation().getDirection().multiply(1.2f));

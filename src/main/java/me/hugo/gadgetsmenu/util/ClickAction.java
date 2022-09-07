@@ -1,11 +1,11 @@
 package me.hugo.gadgetsmenu.util;
 
 import me.hugo.gadgetsmenu.GadgetsMenu;
-import me.hugo.gadgetsmenu.player.PlayerData;
+import me.hugo.gadgetsmenu.player.GadgetPlayer;
 import org.bukkit.event.inventory.ClickType;
 
 public interface ClickAction {
 
-    void execute(GadgetsMenu main, PlayerData player, ClickType type);
+    void execute(GadgetsMenu main, GadgetPlayer player, ClickType type);
 
 }
