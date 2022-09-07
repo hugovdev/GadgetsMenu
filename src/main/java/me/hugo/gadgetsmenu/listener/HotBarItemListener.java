@@ -73,7 +73,7 @@ public class HotBarItemListener implements Listener {
         if (clickAction == null) return;
 
         event.setCancelled(true);
-        clickAction.execute(main, GadgetPlayerRegistry.get(player), event.getAction().name().contains("RIGHT") ? ClickType.RIGHT : ClickType.LEFT);
+        clickAction.execute(main, GadgetPlayerRegistry.getInstance().get(player), event.getAction().name().contains("RIGHT") ? ClickType.RIGHT : ClickType.LEFT);
         player.updateInventory();
     }
 

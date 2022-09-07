@@ -12,12 +12,12 @@ public class PlayerJoinLeave implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        GadgetPlayerRegistry.get(player).setPlayer(player).giveJoinItems(true);
+        GadgetPlayerRegistry.getInstance().get(player).setPlayer(player).giveJoinItems(true);
     }
 
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
-        GadgetPlayerRegistry.remove(event.getPlayer());
+        GadgetPlayerRegistry.getInstance().remove(event.getPlayer());
     }
 
 }

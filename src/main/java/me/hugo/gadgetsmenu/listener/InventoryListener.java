@@ -35,7 +35,7 @@ public class InventoryListener implements Listener {
         if (icon == null) return;
 
         for (ClickAction clickAction : icon.getClickActions()) {
-            clickAction.execute(main, GadgetPlayerRegistry.get(player), event.getClick());
+            clickAction.execute(main, GadgetPlayerRegistry.getInstance().get(player), event.getClick());
         }
     }
 
@@ -44,7 +44,7 @@ public class InventoryListener implements Listener {
         if (!(event.getView().getTopInventory().getHolder() instanceof IconMenu menu) || !(event.getPlayer() instanceof Player player))
             return;
 
-        if (menu.isRemoveInventory()) GadgetPlayerRegistry.get(player).restoreInventory();
+        if (menu.isRemoveInventory()) GadgetPlayerRegistry.getInstance().get(player).restoreInventory();
     }
 
 }

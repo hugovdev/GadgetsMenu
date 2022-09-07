@@ -7,9 +7,11 @@ import java.util.UUID;
 
 public final class GadgetPlayerRegistry {
 
-    private static final HashMap<UUID, GadgetPlayer> gadgetPlayerStorage = new HashMap<>();
+    private static GadgetPlayerRegistry instance = new GadgetPlayerRegistry();
 
-    public static GadgetPlayer get(UUID playerUuid) {
+    private final HashMap<UUID, GadgetPlayer> gadgetPlayerStorage = new HashMap<>();
+
+    public GadgetPlayer get(UUID playerUuid) {
         GadgetPlayer gadgetPlayer = gadgetPlayerStorage.get(playerUuid);
 
         if (gadgetPlayer == null) {
@@ -20,16 +22,19 @@ public final class GadgetPlayerRegistry {
         return gadgetPlayer;
     }
 
-    public static GadgetPlayer get(Player player) {
+    public GadgetPlayer get(Player player) {
         return get(player.getUniqueId());
     }
 
-    public static void remove(Player player) {
+    public void remove(Player player) {
         gadgetPlayerStorage.remove(player.getUniqueId());
     }
 
-    public static void remove(UUID playerUuid) {
+    public void remove(UUID playerUuid) {
         gadgetPlayerStorage.remove(playerUuid);
     }
 
+    public static GadgetPlayerRegistry getInstance() {
+        return instance;
+    }
 }
