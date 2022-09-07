@@ -68,12 +68,12 @@ public enum GadgetType {
         List<Component> itemDescription = this.description.stream().map(line -> Component.text(line).color(NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false)).collect(Collectors.toList());
 
         itemDescription.add(Component.text(""));
-        itemDescription.add(Component.text(hasPermission ? "Click to select!" : "Gadget locked!").color(hasPermission ? NamedTextColor.YELLOW : NamedTextColor.RED).decoration(TextDecoration.ITALIC, false));
+        itemDescription.add(Component.text(hasPermission ? "Click to select!" : "Gadget locked!", hasPermission ? NamedTextColor.YELLOW : NamedTextColor.RED).decoration(TextDecoration.ITALIC, false));
 
         // Building a custom Icon for the player depending on their permissions.
         return new Icon(
                 new ItemBuilder(hasPermission ? this.icon : Material.BLACK_STAINED_GLASS_PANE)
-                        .setName(Component.text(this.name).color(hasPermission ? NamedTextColor.GREEN : NamedTextColor.RED))
+                        .setName(Component.text(this.name, hasPermission ? NamedTextColor.GREEN : NamedTextColor.RED))
                         .setLore(itemDescription)
                         .hideAttributes()
                         .toItemStack()
@@ -81,8 +81,8 @@ public enum GadgetType {
 
                 // Player has permission :::::::::::
                 ((main, clicker, type) -> {
-                    clicker.getPlayer().sendMessage(Component.text("You selected ").color(NamedTextColor.GREEN)
-                            .append(Component.text(this.name).color(NamedTextColor.AQUA)).append(Component.text(" as your gadget!")));
+                    clicker.getPlayer().sendMessage(Component.text("You selected ", NamedTextColor.GREEN)
+                            .append(Component.text(this.name, NamedTextColor.AQUA)).append(Component.text(" as your gadget!")));
 
                     // We set the new gadget item to slot 1, so when the inventory restores, player receives the gadget.
                     clicker.setRestoreItem(1, this.gadgetItem);
@@ -92,8 +92,8 @@ public enum GadgetType {
 
                 // Player doesn't have permission :::::::::
                 ((main, clicker, type) -> {
-                    clicker.getPlayer().sendMessage(Component.text("You haven't unlocked ").color(NamedTextColor.RED)
-                            .append(Component.text(this.name).color(NamedTextColor.AQUA)).append(Component.text(" yet!")));
+                    clicker.getPlayer().sendMessage(Component.text("You haven't unlocked ", NamedTextColor.RED)
+                            .append(Component.text(this.name, NamedTextColor.AQUA)).append(Component.text(" yet!")));
 
                     clicker.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
                 })
