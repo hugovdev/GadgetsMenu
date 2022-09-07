@@ -4,7 +4,9 @@ import me.hugo.gadgetsmenu.GadgetsMenu;
 import me.hugo.gadgetsmenu.gadget.action.GadgetAction;
 import me.hugo.gadgetsmenu.gadget.action.list.ChickenShooterAction;
 import me.hugo.gadgetsmenu.player.GadgetPlayer;
+import me.hugo.gadgetsmenu.util.ClickAction;
 import me.hugo.gadgetsmenu.util.ItemBuilder;
+import me.hugo.gadgetsmenu.util.PlayerUtil;
 import me.hugo.gadgetsmenu.util.gui.Icon;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -15,6 +17,7 @@ import org.bukkit.Sound;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -86,7 +89,8 @@ public enum GadgetType {
 
                     // We set the new gadget item to slot 1, so when the inventory restores, player receives the gadget.
                     clicker.setRestoreItem(1, this.gadgetItem);
-                    clicker.playSound(Sound.BLOCK_NOTE_BLOCK_HAT);
+                    PlayerUtil.playSound(clicker, Sound.BLOCK_NOTE_BLOCK_HAT);
+
                     clicker.getPlayer().closeInventory();
                 }) :
 
@@ -95,9 +99,32 @@ public enum GadgetType {
                     clicker.getPlayer().sendMessage(Component.text("You haven't unlocked ", NamedTextColor.RED)
                             .append(Component.text(this.name, NamedTextColor.AQUA)).append(Component.text(" yet!")));
 
-                    clicker.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
+                    PlayerUtil.playSound(clicker, Sound.ENTITY_ENDERMAN_TELEPORT);
                 })
         );
+    }
+
+    public ClickAction getGadgetInteraction() {
+        return (instance, player, type) -> {
+            if (player.isOnGadgetCooldown()) {
+                double remainingTime = (double) (player.getLastGadgetUseTime() - System.currentTimeMillis()) / 1000;
+
+                player.getPlayer().sendMessage(Component.text("You have to wait ").color(NamedTextColor.RED)
+                        .append(Component.text(new DecimalFormat("0.0").format(remainingTime)).color(NamedTextColor.AQUA))
+                        .append(Component.text(" to use "))
+                        .append(Component.text(this.name).color(NamedTextColor.AQUA))
+                        .append(Component.text("!")));
+
+                PlayerUtil.playSound(player, Sound.ENTITY_PANDA_EAT);
+                return;
+            }
+
+            if (type.isLeftClick()) {
+                if (!gadgetAction.onLeftClick(instance, player)) return;
+            } else if (!gadgetAction.onRightClick(instance, player)) return;
+
+            player.setGadgetCooldown(this.cooldown);
+        };
     }
 
     public GadgetAction getGadgetAction() {
@@ -106,13 +133,5 @@ public enum GadgetType {
 
     public ItemStack getGadgetItem() {
         return gadgetItem;
-    }
-
-    public double getCooldown() {
-        return cooldown;
-    }
-
-    public String getName() {
-        return name;
     }
 }

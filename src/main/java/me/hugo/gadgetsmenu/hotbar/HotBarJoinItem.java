@@ -2,6 +2,7 @@ package me.hugo.gadgetsmenu.hotbar;
 
 import me.hugo.gadgetsmenu.util.ClickAction;
 import me.hugo.gadgetsmenu.util.ItemBuilder;
+import me.hugo.gadgetsmenu.util.PlayerUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -20,7 +21,8 @@ public enum HotBarJoinItem {
                     Component.text("Click to open!").color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false)).toItemStack(),
             (main, player, type) -> {
                 player.openGadgetsInventory();
-                player.playSound(Sound.BLOCK_CHEST_OPEN);
+
+                PlayerUtil.playSound(player, Sound.BLOCK_CHEST_OPEN);
             });
 
     private final int slot;
