@@ -4,7 +4,6 @@ import me.hugo.gadgetsmenu.GadgetsMenu;
 import me.hugo.gadgetsmenu.gadget.GadgetType;
 import me.hugo.gadgetsmenu.gadget.action.GadgetAction;
 import me.hugo.gadgetsmenu.hotbar.HotBarJoinItem;
-import me.hugo.gadgetsmenu.player.GadgetPlayerRegistry;
 import me.hugo.gadgetsmenu.util.ClickAction;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -73,7 +72,7 @@ public class HotBarItemListener implements Listener {
         if (clickAction == null) return;
 
         event.setCancelled(true);
-        clickAction.execute(main, GadgetPlayerRegistry.getInstance().get(player), event.getAction().name().contains("RIGHT") ? ClickType.RIGHT : ClickType.LEFT);
+        clickAction.execute(main, main.getPlayerRegistry().get(player), event.getAction().name().contains("RIGHT") ? ClickType.RIGHT : ClickType.LEFT);
         player.updateInventory();
     }
 

@@ -7,8 +7,6 @@ import java.util.UUID;
 
 public final class GadgetPlayerRegistry {
 
-    private static GadgetPlayerRegistry instance = new GadgetPlayerRegistry();
-
     private final HashMap<UUID, GadgetPlayer> gadgetPlayerStorage = new HashMap<>();
 
     public GadgetPlayer get(UUID playerUuid) {
@@ -32,9 +30,5 @@ public final class GadgetPlayerRegistry {
 
     public void remove(UUID playerUuid) {
         gadgetPlayerStorage.remove(playerUuid);
-    }
-
-    public static GadgetPlayerRegistry getInstance() {
-        return instance;
     }
 }
