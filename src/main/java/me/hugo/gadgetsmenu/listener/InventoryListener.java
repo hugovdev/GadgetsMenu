@@ -2,6 +2,7 @@ package me.hugo.gadgetsmenu.listener;
 
 import me.hugo.gadgetsmenu.GadgetsMenu;
 import me.hugo.gadgetsmenu.util.ClickAction;
+import me.hugo.gadgetsmenu.util.PlayerUtil;
 import me.hugo.gadgetsmenu.util.gui.Icon;
 import me.hugo.gadgetsmenu.util.gui.IconMenu;
 import org.bukkit.Material;
@@ -43,7 +44,7 @@ public class InventoryListener implements Listener {
         if (!(event.getView().getTopInventory().getHolder() instanceof IconMenu menu) || !(event.getPlayer() instanceof Player player))
             return;
 
-        if (menu.isRemoveInventory()) main.getPlayerRegistry().get(player).restoreInventory();
+        if (menu.isRemoveInventory()) PlayerUtil.restoreInventory(main.getPlayerRegistry().get(player));
     }
 
 }

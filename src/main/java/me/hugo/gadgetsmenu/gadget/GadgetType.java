@@ -88,7 +88,7 @@ public enum GadgetType {
                             .append(Component.text(this.name, NamedTextColor.AQUA)).append(Component.text(" as your gadget!")));
 
                     // We set the new gadget item to slot 1, so when the inventory restores, player receives the gadget.
-                    clicker.setRestoreItem(1, this.gadgetItem);
+                    PlayerUtil.setRestoreItem(clicker, 1, this.gadgetItem);
                     PlayerUtil.playSound(clicker, Sound.BLOCK_NOTE_BLOCK_HAT);
 
                     clicker.getPlayer().closeInventory();

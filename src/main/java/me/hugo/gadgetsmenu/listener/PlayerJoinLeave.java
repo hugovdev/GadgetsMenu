@@ -1,6 +1,8 @@
 package me.hugo.gadgetsmenu.listener;
 
 import me.hugo.gadgetsmenu.GadgetsMenu;
+import me.hugo.gadgetsmenu.player.GadgetPlayer;
+import me.hugo.gadgetsmenu.util.PlayerUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
@@ -38,7 +40,9 @@ public class PlayerJoinLeave implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        main.getPlayerRegistry().get(player).setPlayer(player).giveJoinItems(true);
+        GadgetPlayer gadgetPlayer = main.getPlayerRegistry().get(player).setPlayer(player);
+
+        PlayerUtil.giveJoinItems(gadgetPlayer, true);
     }
 
     @EventHandler

@@ -21,7 +21,6 @@ public enum HotBarJoinItem {
                     Component.text("Click to open!").color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false)).toItemStack(),
             (main, player, type) -> {
                 player.openGadgetsInventory();
-
                 PlayerUtil.playSound(player, Sound.BLOCK_CHEST_OPEN);
             });
 
